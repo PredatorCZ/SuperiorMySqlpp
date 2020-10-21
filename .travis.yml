@@ -10,7 +10,13 @@ addons:
       - libmysqlclient-dev
       - socat
 
+before_install:
+  - pip install --user cpp-coveralls
+
 script:
-  - mkdir build && cd build && cmake ..
+  - mkdir build && cd build && cmake .. -DGCOV_ENABLED=ON
   - cmake --build . --parallel 6
   - ctest --output-on-failure
+
+after_success:
+  - cd ../.. && coveralls -E ".*/SuperiorMySqlpp/build/.*.c((pp)|(c)|(xx))?$" -e tests --gcov-options '\-lp'

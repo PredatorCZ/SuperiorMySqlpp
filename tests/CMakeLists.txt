@@ -1,6 +1,6 @@
 function(setup_test target)
-  target_include_directories(
-    ${target} PRIVATE ${CMAKE_SOURCE_DIR}/third_party/bandit)
+  target_include_directories(${target}
+                             PRIVATE ${CMAKE_SOURCE_DIR}/third_party/bandit)
   target_compile_options(
     ${target}
     PRIVATE -pedantic-errors
@@ -11,11 +11,14 @@ function(setup_test target)
             -Wnarrowing
             -fsanitize=address
             -fsanitize=leak
-            -fsanitize=undefined)
+            -fsanitize=undefined
+            -fprofile-arcs
+            -ftest-coverage)
 
   target_link_libraries(
     ${target}
     SuperiorMySqlpp
+    gcov
     # TODO: Use target_link_options on CMake V3.13+
     -fsanitize=address
     -fsanitize=leak
@@ -25,6 +28,12 @@ function(setup_test target)
     -rdynamic
     # -fuse-linker-plugin
   )
+
+  if(GCOV_ENABLED)
+    target_compile_options(${target} PRIVATE -fprofile-arcs -ftest-coverage)
+    target_link_libraries(${target} gcov)
+  endif()
+
 endfunction()
 
 add_executable(

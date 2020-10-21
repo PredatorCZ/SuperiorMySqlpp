@@ -6,6 +6,7 @@ project(SuperiorMySqlpp VERSION 0.6.1)
 option(TEST_ENABLED "Enable test builds" TRUE)
 option(TEST_ODR_ENABLED "Test One Definition Rule" TRUE)
 option(TEST_EXTENDED_ENABLED "Enable extended tests" TRUE)
+option(GCOV_ENABLED "Enable code coverage." FALSE)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
