@@ -19,4 +19,4 @@ script:
   - ctest --output-on-failure
 
 after_success:
-  - cd ../.. && coveralls -E ".*/SuperiorMySqlpp/build/.*.c((pp)|(c)|(xx))?$" -e tests --gcov-options '\-lp'
+  - cd .. && coveralls -E ".*/SuperiorMySqlpp/build/.*.c((pp)|(c)|(xx))?$" -e tests --gcov-options '\-lp'
